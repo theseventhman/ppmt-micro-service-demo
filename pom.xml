@@ -8,6 +8,7 @@
         <module>ppmt-core-demo</module>
         <module>workflow-demo</module>
         <module>observer-demo</module>
+        <module>ppmt-configure-center-demo</module>
     </modules>
 
     <groupId>com.tj.exercise</groupId>
@@ -16,10 +17,13 @@
     <name>ppmt-micro-service-demo</name>
     <description>Demo project for Spring Boot</description>
     <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
         <java.version>1.8</java.version>
         <spring-boot.version>2.4.4</spring-boot.version>
         <spring-cloud.version>2020.0.2</spring-cloud.version>
         <spring-cloud-alibaba.version>2020.0.RC1</spring-cloud-alibaba.version>
+
     </properties>
     <dependencyManagement>
         <dependencies>
