@@ -29,6 +29,7 @@ public class RequestUtil implements  Runnable {
             Call<List<ConfigInfoVO>> callSync = service.getConfigInfos();
             try {
                 Response<List<ConfigInfoVO>> response = callSync.execute();
+                System.out.println(response.body().size());
             } catch (IOException e) {
                 e.printStackTrace();
             }

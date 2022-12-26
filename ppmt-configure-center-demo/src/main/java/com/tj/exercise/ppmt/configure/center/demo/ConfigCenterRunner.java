@@ -11,10 +11,10 @@ import org.springframework.stereotype.Component;
  * @Date: 2022/12/12 20:31
  */
 @Component
-public class ConfigCenterRunner implements CommandLineRunner {
+public class ConfigCenterRunner implements ApplicationRunner {
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(ApplicationArguments args) throws Exception {
         Thread thread = new Thread(new RequestUtil());
         thread.setName("requestUtil");
         thread.setDaemon(true);

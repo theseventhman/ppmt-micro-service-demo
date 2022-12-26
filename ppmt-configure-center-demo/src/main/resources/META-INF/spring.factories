@@ -1,0 +1,1 @@
+org.springframework.boot.env.EnvironmentPostProcessor=com.tj.exercise.ppmt.configure.center.demo.common.PpmtDynamicRegistry
