@@ -18,8 +18,8 @@ public class PpmtBootStrap {
 
         }
 
-        private static class PpmtBootStrapHelper {
-            private static PpmtBootStrap INSTANCE = new PpmtBootStrap();
+         static class PpmtBootStrapHelper {
+            public final static PpmtBootStrap INSTANCE = new PpmtBootStrap();
         }
 
         public static PpmtBootStrap getInstance(){

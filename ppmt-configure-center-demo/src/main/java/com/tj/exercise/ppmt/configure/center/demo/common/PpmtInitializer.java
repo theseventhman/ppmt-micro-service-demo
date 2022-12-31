@@ -13,14 +13,15 @@ import org.springframework.stereotype.Component;
  * @Date: 2022/12/22 15:09
  */
 @Component
-public class PpmtDynamicRegistry implements ApplicationContextInitializer<ConfigurableApplicationContext>, EnvironmentPostProcessor {
+public class PpmtInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext>, EnvironmentPostProcessor {
     @Override
     public void postProcessEnvironment(ConfigurableEnvironment environment, SpringApplication application) {
-       PpmtBootStrap.getInstance();
+        PpmtBootStrap ppmtBootStrap = PpmtBootStrap.getInstance();
     }
 
     @Override
     public void initialize(ConfigurableApplicationContext configurableApplicationContext) {
+
         return;
     }
 }
