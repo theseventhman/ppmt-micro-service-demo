@@ -1,4 +1,4 @@
-package com.tj.exercise.ppmt.configure.center.demo.common;
+package com.tj.exercise.ppmt.configure.center.demo.common.support;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.env.ConfigurableEnvironment;
@@ -14,7 +14,7 @@ import java.util.Map;
  */
 @Slf4j
 public class PpmtConfigEnvironmentSupport {
-    public static final String PPMT_PREFIX = "ppmt_";
+    public static final String SOURCE_NAME_PREFIX = "ppmt_";
     private final ConfigurableEnvironment environment;
 
     public PpmtConfigEnvironmentSupport(ConfigurableEnvironment environment) {
@@ -24,7 +24,7 @@ public class PpmtConfigEnvironmentSupport {
     public void refreshEnvironmentProperty(String fileName, String key, Object value){
         MutablePropertySources propertySources = environment.getPropertySources();
         for(PropertySource<?> propertySource : propertySources){
-            if(propertySource.getName().equals(PPMT_PREFIX + fileName) && propertySource instanceof PropertiesPropertySource){
+            if(propertySource.getName().equals(SOURCE_NAME_PREFIX + fileName) && propertySource instanceof PropertiesPropertySource){
                 log.info("-------更新Environment Property-----key: {},value :{}",key,value);
                 PropertiesPropertySource properties = (PropertiesPropertySource)propertySource;
                 Map<String,Object> sourceMap = properties.getSource();

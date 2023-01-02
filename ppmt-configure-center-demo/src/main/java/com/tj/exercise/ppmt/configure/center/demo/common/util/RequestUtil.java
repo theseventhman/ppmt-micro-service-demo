@@ -1,4 +1,4 @@
-package com.tj.exercise.ppmt.configure.center.demo.common;
+package com.tj.exercise.ppmt.configure.center.demo.common.util;
 
 import com.tj.exercise.ppmt.configure.center.demo.common.facade.ConfigInfoFacade;
 import com.tj.exercise.ppmt.configure.center.demo.common.vo.ConfigInfoVO;

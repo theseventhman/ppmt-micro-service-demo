@@ -1,10 +1,11 @@
 package com.tj.exercise.ppmt.configure.center.demo.common;
 
 import cn.hutool.core.collection.CollectionUtil;
+import com.tj.exercise.ppmt.configure.center.demo.common.util.PropertiesUtil;
 import com.tj.exercise.ppmt.configure.center.demo.common.vo.ConfigInfoVO;
-import jdk.management.resource.NotifyingMeter;
 
-import java.net.FileNameMap;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -33,12 +34,33 @@ public class PpmtKvStore {
 
     }
 
-    private static class Notify {
+    public static class Notify {
+        private ConcurrentHashMap<String, List<UpdateListener>> listenerMap;
         private Notify(){
-
+           listenerMap = new ConcurrentHashMap<>();
         }
 
         public void notifyPropertiesKeyListener(Config oldConfig, String configItem, String configValue) {
+        }
+
+        public void addPropertiesListener(String fileName, String key, DynamicPropertyFieldListener dynamicPropertyFieldListener) {
+            String listenerKey = generateListenKey(fileName,key);
+            if(listenerMap.containsKey(listenerKey)){
+                listenerMap.computeIfPresent(listenerKey,(k,v) ->{
+                    v.add(dynamicPropertyFieldListener);
+                        return v;
+                });
+            }
+            else{
+                List<UpdateListener> listeners = new ArrayList<>();
+                listeners.add(dynamicPropertyFieldListener);
+                listenerMap.put(listenerKey,listeners);
+            }
+        }
+
+        private String generateListenKey(String fileName, String key) {
+            String listenKey = fileName+key;
+            return listenKey;
         }
 
         private static class NotifyHelper {

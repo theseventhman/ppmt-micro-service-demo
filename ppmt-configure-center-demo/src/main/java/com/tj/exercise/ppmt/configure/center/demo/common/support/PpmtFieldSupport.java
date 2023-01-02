@@ -1,4 +1,4 @@
-package com.tj.exercise.ppmt.configure.center.demo.common;
+package com.tj.exercise.ppmt.configure.center.demo.common.support;
 
 import cn.hutool.core.util.ReflectUtil;
 import com.sun.el.util.ReflectionUtil;
@@ -12,10 +12,10 @@ import java.util.Collections;
  * @Author: tj
  * @Date: 2022/12/31 20:56
  */
-public class PpmFieldSupport {
+public class PpmtFieldSupport {
     private ConfigurableListableBeanFactory beanFactory;
 
-    public PpmFieldSupport(ConfigurableListableBeanFactory beanFactory) {
+    public PpmtFieldSupport(ConfigurableListableBeanFactory beanFactory) {
         this.beanFactory = beanFactory;
     }
 

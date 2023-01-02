@@ -1,7 +1,8 @@
-package com.tj.exercise.ppmt.configure.center.demo.common;
+package com.tj.exercise.ppmt.configure.center.demo.common.util;
 
 import com.alibaba.nacos.common.utils.IoUtils;
 import com.fasterxml.jackson.core.util.BufferRecycler;
+import com.tj.exercise.ppmt.configure.center.demo.common.Config;
 import org.apache.commons.io.IOUtils;
 
 import java.io.*;

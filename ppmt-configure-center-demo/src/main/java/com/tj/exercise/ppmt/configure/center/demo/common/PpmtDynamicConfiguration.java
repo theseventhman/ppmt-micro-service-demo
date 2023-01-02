@@ -1,8 +1,12 @@
 package com.tj.exercise.ppmt.configure.center.demo.common;
 
 import com.tj.exercise.ppmt.configure.center.demo.PpmtDynamicPropertyRegistery;
+import com.tj.exercise.ppmt.configure.center.demo.common.support.PpmtFieldSupport;
+import com.tj.exercise.ppmt.configure.center.demo.common.support.PpmtConfigEnvironmentSupport;
+import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.ConfigurableEnvironment;
 
 /**
  * @Author: tj
@@ -11,7 +15,18 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class PpmtDynamicConfiguration {
    @Bean
-    public PpmtDynamicPropertyRegistery configCenterRunner(PpmtDynamicProperties ppmtDynamicProperties){
-        return new PpmtDynamicPropertyRegistery(ppmtDynamicProperties);
+    public PpmtDynamicPropertyRegistery ppmtDynamicPropertyRegistery(PpmtDynamicProperties ppmtDynamicProperties,
+                                                                     PpmtConfigEnvironmentSupport environmentSupport, PpmtFieldSupport ppmtFieldSupport){
+        return new PpmtDynamicPropertyRegistery(ppmtDynamicProperties,environmentSupport, ppmtFieldSupport);
+    }
+
+    @Bean
+    public PpmtFieldSupport ppmtFieldSupport(ConfigurableListableBeanFactory beanFactory){
+       return new PpmtFieldSupport(beanFactory);
+    }
+
+    @Bean
+    public PpmtConfigEnvironmentSupport ppmtConfigEnvironmentSupport(ConfigurableEnvironment configurableEnvironment){
+       return new PpmtConfigEnvironmentSupport(configurableEnvironment);
     }
 }

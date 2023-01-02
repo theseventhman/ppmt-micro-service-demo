@@ -1,4 +1,4 @@
-package com.tj.exercise.ppmt.configure.center.demo.common;
+package com.tj.exercise.ppmt.configure.center.demo.common.util;
 
 import java.io.IOException;
 import java.io.InputStream;

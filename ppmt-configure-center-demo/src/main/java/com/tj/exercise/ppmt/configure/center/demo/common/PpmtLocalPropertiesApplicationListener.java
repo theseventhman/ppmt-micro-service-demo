@@ -1,11 +1,11 @@
 package com.tj.exercise.ppmt.configure.center.demo.common;
 
+import com.tj.exercise.ppmt.configure.center.demo.common.util.PropertiesLoaderUtil;
 import org.springframework.boot.context.event.ApplicationContextInitializedEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.core.Ordered;
 import org.springframework.core.env.MutablePropertySources;
 import org.springframework.core.env.PropertiesPropertySource;
-import org.springframework.core.io.support.PropertiesLoaderUtils;
 
 import java.util.Properties;
 

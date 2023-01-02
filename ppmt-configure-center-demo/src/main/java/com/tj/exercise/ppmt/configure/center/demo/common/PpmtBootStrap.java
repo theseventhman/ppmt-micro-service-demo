@@ -1,5 +1,7 @@
 package com.tj.exercise.ppmt.configure.center.demo.common;
 
+import com.tj.exercise.ppmt.configure.center.demo.common.util.RequestUtil;
+
 import java.util.List;
 
 /**
@@ -16,6 +18,13 @@ public class PpmtBootStrap {
             }
 
 
+        }
+
+        public void init(){
+            Thread thread = new Thread(new RequestUtil());
+            thread.setName("requestUtil");
+            thread.setDaemon(true);
+            thread.start();
         }
 
          static class PpmtBootStrapHelper {
