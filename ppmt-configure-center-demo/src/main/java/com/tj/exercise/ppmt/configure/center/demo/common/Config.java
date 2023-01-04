@@ -11,9 +11,6 @@ import java.util.List;
  */
 @Data
 public class Config {
-    private String fileName;
+    private String configFileName;
     private String value;
-    private List<ConfigInfoVO> configInfoVOS;
-    private List<UpdateListener> listeners;
-
 }

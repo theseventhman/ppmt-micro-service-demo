@@ -1,7 +1,12 @@
 package com.tj.exercise.ppmt.configure.center.demo.common;
 
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @Author: tj
@@ -9,14 +14,16 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class PpmtDynamicProperties implements InitializingBean {
-    private String watchFiles;
+    @Autowired
+    private Environment environment;
+    private List<String> watchFiles;
 
-    public String getWatchFiles() {
+    public List<String> getWatchFiles() {
         return watchFiles;
     }
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        watchFiles = "justfortest";
+        watchFiles = Arrays.asList(environment.getProperty("watch.file").split(","));
     }
 }

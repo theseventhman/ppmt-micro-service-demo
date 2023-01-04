@@ -9,6 +9,7 @@
         <module>workflow-demo</module>
         <module>observer-demo</module>
         <module>ppmt-configure-center-demo</module>
+        <module>ppmt-core-project-api-demo</module>
     </modules>
 
     <groupId>com.tj.exercise</groupId>

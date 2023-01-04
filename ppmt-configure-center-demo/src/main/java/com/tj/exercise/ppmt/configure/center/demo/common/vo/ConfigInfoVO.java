@@ -8,6 +8,7 @@ import lombok.Data;
  */
 @Data
 public class ConfigInfoVO {
+    private String configFileName;
     private String configItem;
     private String configValue;
 }

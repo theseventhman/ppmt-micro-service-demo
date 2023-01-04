@@ -1,6 +1,7 @@
 package com.tj.exercise.ppmt.configure.center.demo.common.facade;
 
 import com.tj.exercise.ppmt.configure.center.demo.common.vo.ConfigInfoVO;
+import com.tj.exercise.ppmt.core.project.api.demo.dto.ConfigDto;
 import retrofit2.Call;
 import retrofit2.http.GET;
 
@@ -12,5 +13,5 @@ import java.util.List;
  */
 public interface ConfigInfoFacade {
     @GET("/config/getConfigInfos")
-    public Call<List<ConfigInfoVO>> getConfigInfos();
+    public Call<List<ConfigDto>> getConfigInfos();
 }

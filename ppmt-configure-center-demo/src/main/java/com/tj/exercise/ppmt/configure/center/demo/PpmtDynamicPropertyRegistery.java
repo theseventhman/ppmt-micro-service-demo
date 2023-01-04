@@ -33,9 +33,10 @@ public class PpmtDynamicPropertyRegistery implements InitializingBean, Applicati
     private PpmtConfigEnvironmentSupport configEnvironmentSupport;
     private PpmtFieldSupport fieldSupport;
 
-    public PpmtDynamicPropertyRegistery(PpmtDynamicProperties ppmtDynamicProperties,PpmtConfigEnvironmentSupport environmentSupport,
+    public PpmtDynamicPropertyRegistery(PpmtDynamicProperties ppmtDynamicProperties, ConfigurableEnvironment environment, PpmtConfigEnvironmentSupport environmentSupport,
                                         PpmtFieldSupport fieldSupport) {
         this.ppmtDynamicProperties = ppmtDynamicProperties;
+        this.environment = environment;
         this.configEnvironmentSupport = environmentSupport;
         this.fieldSupport = fieldSupport;
     }
@@ -105,6 +106,7 @@ public class PpmtDynamicPropertyRegistery implements InitializingBean, Applicati
 
     @Override
     public void afterPropertiesSet() throws Exception {
+        this.fileNames = this.ppmtDynamicProperties.getWatchFiles();
         System.out.println("调用到了afterPropertiesSet方法");
     }
 

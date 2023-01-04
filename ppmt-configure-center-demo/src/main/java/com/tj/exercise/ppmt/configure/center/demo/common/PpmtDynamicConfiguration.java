@@ -15,9 +15,9 @@ import org.springframework.core.env.ConfigurableEnvironment;
 @Configuration
 public class PpmtDynamicConfiguration {
    @Bean
-    public PpmtDynamicPropertyRegistery ppmtDynamicPropertyRegistery(PpmtDynamicProperties ppmtDynamicProperties,
+    public PpmtDynamicPropertyRegistery ppmtDynamicPropertyRegistery(PpmtDynamicProperties ppmtDynamicProperties,ConfigurableEnvironment environment,
                                                                      PpmtConfigEnvironmentSupport environmentSupport, PpmtFieldSupport ppmtFieldSupport){
-        return new PpmtDynamicPropertyRegistery(ppmtDynamicProperties,environmentSupport, ppmtFieldSupport);
+        return new PpmtDynamicPropertyRegistery(ppmtDynamicProperties,environment, environmentSupport, ppmtFieldSupport);
     }
 
     @Bean

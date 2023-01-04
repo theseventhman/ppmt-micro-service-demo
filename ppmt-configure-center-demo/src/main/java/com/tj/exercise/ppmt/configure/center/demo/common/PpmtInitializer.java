@@ -17,6 +17,7 @@ public class PpmtInitializer implements ApplicationContextInitializer<Configurab
     @Override
     public void postProcessEnvironment(ConfigurableEnvironment environment, SpringApplication application) {
         PpmtBootStrap ppmtBootStrap = PpmtBootStrap.getInstance();
+        ConfigLoader.getInstance().load(environment);
     }
 
     @Override

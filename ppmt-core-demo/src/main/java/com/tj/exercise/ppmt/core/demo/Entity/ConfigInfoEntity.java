@@ -14,12 +14,22 @@ public class ConfigInfoEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @TableField("config_file_name")
+    private String configFileName;
+
     @TableField("config_item")
     private String configItem;
 
     @TableField("config_value")
     private String configValue;
 
+    public String getConfigFileName() {
+        return configFileName;
+    }
+
+    public void setConfigFileName(String configFileName) {
+        this.configFileName = configFileName;
+    }
     public String getConfigItem() {
         return configItem;
     }
@@ -38,7 +48,8 @@ public class ConfigInfoEntity implements Serializable {
     @Override
     public String toString() {
         return "ConfigInfoEntity{" +
-                "configItem=" + configItem +
+                "configFileName=" + configFileName +
+                ", configItem=" + configItem +
                 ", configValue=" + configValue +
                 "}";
     }

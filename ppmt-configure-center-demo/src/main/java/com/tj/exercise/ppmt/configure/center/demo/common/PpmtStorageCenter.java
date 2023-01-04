@@ -1,8 +1,5 @@
 package com.tj.exercise.ppmt.configure.center.demo.common;
 
-import org.apache.catalina.Store;
-
-import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -29,9 +26,8 @@ public class PpmtStorageCenter {
 
     public  Config putIfChanged(Config config) {
         Config oldConfig = null;
-        if(store.get(config.getFileName()) == null){
-            store.put(config.getFileName(),config);
-            oldConfig = store.get(config.getFileName());
+        if(store.get(config.getConfigFileName()) == null){
+            store.put(config.getConfigFileName(),config);
         }
         return oldConfig;
 

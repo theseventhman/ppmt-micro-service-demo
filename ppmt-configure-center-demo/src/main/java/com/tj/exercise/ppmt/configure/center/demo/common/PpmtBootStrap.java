@@ -12,12 +12,7 @@ public class PpmtBootStrap {
 
         private PpmtBootStrap(){
             System.out.println("调用私有构造函数");
-            List<Config> configs = PpmtConfig.loadConfigForDownload();
-            for (Config config : configs) {
-               ConfigLoader.getInstance().loadConfig(config);
-            }
-
-
+             PpmtConfig.loadConfigForDownload();
         }
 
         public void init(){
