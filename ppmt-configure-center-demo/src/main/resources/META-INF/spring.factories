@@ -1,1 +1,6 @@
-org.springframework.boot.env.EnvironmentPostProcessor=com.tj.exercise.ppmt.configure.center.demo.common.PpmtInitializer
+org.springframework.boot.env.EnvironmentPostProcessor=\
+com.tj.exercise.ppmt.configure.center.demo.common.PpmtInitializer
+
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.tj.exercise.ppmt.configure.center.demo.common.PpmtDynamicProperties,\
+com.tj.exercise.ppmt.configure.center.demo.common.PpmtDynamicConfiguration

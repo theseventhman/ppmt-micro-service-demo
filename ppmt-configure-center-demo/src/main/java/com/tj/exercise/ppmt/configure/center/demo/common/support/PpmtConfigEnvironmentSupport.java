@@ -14,7 +14,7 @@ import java.util.Map;
  */
 @Slf4j
 public class PpmtConfigEnvironmentSupport {
-    public static final String SOURCE_NAME_PREFIX = "ppmt_";
+    public static final String SOURCE_NAME_PREFIX = "ppmt-";
     private final ConfigurableEnvironment environment;
 
     public PpmtConfigEnvironmentSupport(ConfigurableEnvironment environment) {
