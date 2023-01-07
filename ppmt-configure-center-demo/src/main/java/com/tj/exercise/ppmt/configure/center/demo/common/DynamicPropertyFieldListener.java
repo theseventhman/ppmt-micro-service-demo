@@ -5,6 +5,7 @@ import com.tj.exercise.ppmt.configure.center.demo.common.support.PpmtConfigEnvir
 import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,7 +17,7 @@ public class DynamicPropertyFieldListener implements UpdateListener  {
     private PpmtConfigEnvironmentSupport configEnvironmentSupport;
     private PpmtFieldSupport fieldSupport;
     private String fileName;
-    private List<DynamicPropertyTarget> targets;
+    private List<DynamicPropertyTarget> targets = new ArrayList<>();
     private String key;
 
     public DynamicPropertyFieldListener(String fileName, String key, PpmtConfigEnvironmentSupport configEnvironmentSupport, PpmtFieldSupport fieldSupport) {

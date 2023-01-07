@@ -1,14 +1,12 @@
 package com.tj.exercise.ppmt.configure.center.demo;
 
 import cn.hutool.core.util.StrUtil;
-import com.tj.exercise.ppmt.configure.center.demo.common.DynamicPropertyFieldListener;
-import com.tj.exercise.ppmt.configure.center.demo.common.PpmtBootStrap;
-import com.tj.exercise.ppmt.configure.center.demo.common.PpmtDynamicProperties;
-import com.tj.exercise.ppmt.configure.center.demo.common.PpmtKvStore;
+import com.tj.exercise.ppmt.configure.center.demo.common.*;
 import com.tj.exercise.ppmt.configure.center.demo.common.support.PpmtFieldSupport;
 import com.tj.exercise.ppmt.configure.center.demo.common.support.PpmtConfigEnvironmentSupport;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.core.Ordered;
@@ -32,17 +30,23 @@ public class PpmtDynamicPropertyRegistery implements InitializingBean, Applicati
     private List<DynamicPropertyFieldListener> listeners = new ArrayList<>();
     private PpmtConfigEnvironmentSupport configEnvironmentSupport;
     private PpmtFieldSupport fieldSupport;
+    private DynamicBeanScanner dynamicBeanScanner;
+
+
 
     public PpmtDynamicPropertyRegistery(PpmtDynamicProperties ppmtDynamicProperties, ConfigurableEnvironment environment, PpmtConfigEnvironmentSupport environmentSupport,
-                                        PpmtFieldSupport fieldSupport) {
+                                        PpmtFieldSupport fieldSupport,DynamicBeanScanner dynamicBeanScanner) {
         this.ppmtDynamicProperties = ppmtDynamicProperties;
         this.environment = environment;
         this.configEnvironmentSupport = environmentSupport;
         this.fieldSupport = fieldSupport;
+        this.dynamicBeanScanner = dynamicBeanScanner;
     }
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
+        //扫描特定包下，需要动态监听的Bean
+        registerBeans();
         //注册剩下的watchKeys
         //如果有指定的watchKeys,只根据watchKeys扫描，如果没有指定，那就扫描默认FileName里的property
         if(watcheKeys.isEmpty()){
@@ -61,6 +65,19 @@ public class PpmtDynamicPropertyRegistery implements InitializingBean, Applicati
         }
         PpmtBootStrap.getInstance().init();
 
+
+    }
+
+    private void registerBeans() {
+        List<Object> targetBeans = dynamicBeanScanner.getTargetBeans();
+        for(Object targetBean : targetBeans){
+            registerDynamicFieldProperties(targetBean);
+        }
+    }
+
+    private void registerDynamicFieldProperties(Object targetBean) {
+        // 此处有可能获取的是经过代理的类, 属性是挂在本身的类里
+        Object realTarget;
 
     }
 

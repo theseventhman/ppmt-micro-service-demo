@@ -26,7 +26,7 @@ public class RequestUtil implements  Runnable {
 
             SendRequestGetConfigInfo();
             try {
-                Thread.sleep(5 *
+                Thread.sleep(2 *
                         60 *
                         1000);
             } catch (InterruptedException e) {

@@ -28,6 +28,10 @@ public class PpmtStorageCenter {
         Config oldConfig = null;
         if(store.get(config.getConfigFileName()) == null){
             store.put(config.getConfigFileName(),config);
+
+        }
+        else{
+            oldConfig = store.get(config.getConfigFileName());
         }
         return oldConfig;
 
