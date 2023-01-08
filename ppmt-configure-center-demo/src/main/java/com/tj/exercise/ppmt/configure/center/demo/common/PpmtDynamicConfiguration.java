@@ -1,6 +1,7 @@
 package com.tj.exercise.ppmt.configure.center.demo.common;
 
 import com.tj.exercise.ppmt.configure.center.demo.PpmtDynamicPropertyRegistery;
+import com.tj.exercise.ppmt.configure.center.demo.common.listener.DynamicPropertyFieldListener;
 import com.tj.exercise.ppmt.configure.center.demo.common.support.PpmtFieldSupport;
 import com.tj.exercise.ppmt.configure.center.demo.common.support.PpmtConfigEnvironmentSupport;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;

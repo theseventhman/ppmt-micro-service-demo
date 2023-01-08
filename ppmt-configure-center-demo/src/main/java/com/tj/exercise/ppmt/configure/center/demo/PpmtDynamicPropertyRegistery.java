@@ -2,14 +2,17 @@ package com.tj.exercise.ppmt.configure.center.demo;
 
 import cn.hutool.core.util.StrUtil;
 import com.tj.exercise.ppmt.configure.center.demo.common.*;
+import com.tj.exercise.ppmt.configure.center.demo.common.listener.DynamicPropertyFieldListener;
 import com.tj.exercise.ppmt.configure.center.demo.common.support.PpmtFieldSupport;
 import com.tj.exercise.ppmt.configure.center.demo.common.support.PpmtConfigEnvironmentSupport;
+import com.tj.exercise.ppmt.configure.center.demo.common.util.AopTargetUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.core.Ordered;
+import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.core.env.*;
 
 import java.lang.reflect.Field;
@@ -78,6 +81,16 @@ public class PpmtDynamicPropertyRegistery implements InitializingBean, Applicati
     private void registerDynamicFieldProperties(Object targetBean) {
         // 此处有可能获取的是经过代理的类, 属性是挂在本身的类里
         Object realTarget;
+        realTarget = AopTargetUtil.getTarget(targetBean);
+        Field[] fields =  realTarget.getClass().getDeclaredFields();
+
+        for(Field field : fields){
+            if(field.isAnnotationPresent(Value.class)) {
+                Value valueAnnotation = field.getAnnotation(Value.class);
+
+                addDynamicPropertyListen(field, realTarget, field.getName(), field.getName());
+            }
+        }
 
     }
 

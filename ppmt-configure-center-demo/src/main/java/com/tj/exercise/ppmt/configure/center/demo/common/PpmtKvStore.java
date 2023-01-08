@@ -1,12 +1,13 @@
 package com.tj.exercise.ppmt.configure.center.demo.common;
 
+import com.tj.exercise.ppmt.configure.center.demo.common.listener.DynamicBeanFieldListener;
+import com.tj.exercise.ppmt.configure.center.demo.common.listener.DynamicPropertyFieldListener;
+import com.tj.exercise.ppmt.configure.center.demo.common.listener.UpdateListener;
 import com.tj.exercise.ppmt.configure.center.demo.common.support.PpmtConfigEnvironmentSupport;
-import com.tj.exercise.ppmt.configure.center.demo.common.util.PropertiesLoaderUtil;
 import com.tj.exercise.ppmt.configure.center.demo.common.util.PropertiesUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -44,8 +45,24 @@ public class PpmtKvStore {
 
     public static class Notify {
         private ConcurrentHashMap<String, List<UpdateListener>> listenerMap;
+        private ConcurrentHashMap<String,List<UpdateListener>> fieldListenerMap;
         private Notify(){
            listenerMap = new ConcurrentHashMap<>();
+           fieldListenerMap = new ConcurrentHashMap<>();
+        }
+
+        public void addFieldListenerMap(String key, DynamicBeanFieldListener dynamicBeanFieldListener){
+            if(fieldListenerMap.containsKey(key)){
+                fieldListenerMap.computeIfPresent(key,(k,v) ->{
+                    v.add(dynamicBeanFieldListener);
+                    return v;
+                });
+            }
+            else{
+                List<UpdateListener> listeners = new ArrayList<>();
+                listeners.add(dynamicBeanFieldListener);
+                fieldListenerMap.put(key,listeners);
+            }
         }
 
 
@@ -77,7 +94,7 @@ public class PpmtKvStore {
              if(listenerMap.containsKey(listenerKey)){
                    List<UpdateListener> listeners = listenerMap.get(listenerKey);
                    for(UpdateListener listener : listeners){
-                       listener.handleEvent(key,oldValue,newValue);
+                       listener.handleEvent(key,newValue,oldValue);
                    }
                 }
 

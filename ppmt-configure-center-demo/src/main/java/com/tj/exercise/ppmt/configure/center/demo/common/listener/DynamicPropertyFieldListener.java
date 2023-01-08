@@ -1,5 +1,6 @@
-package com.tj.exercise.ppmt.configure.center.demo.common;
+package com.tj.exercise.ppmt.configure.center.demo.common.listener;
 
+import com.tj.exercise.ppmt.configure.center.demo.common.listener.UpdateListener;
 import com.tj.exercise.ppmt.configure.center.demo.common.support.PpmtFieldSupport;
 import com.tj.exercise.ppmt.configure.center.demo.common.support.PpmtConfigEnvironmentSupport;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +14,7 @@ import java.util.List;
  * @Date: 2023/1/1 22:28
  */
 @Slf4j
-public class DynamicPropertyFieldListener implements UpdateListener  {
+public class DynamicPropertyFieldListener implements UpdateListener {
     private PpmtConfigEnvironmentSupport configEnvironmentSupport;
     private PpmtFieldSupport fieldSupport;
     private String fileName;

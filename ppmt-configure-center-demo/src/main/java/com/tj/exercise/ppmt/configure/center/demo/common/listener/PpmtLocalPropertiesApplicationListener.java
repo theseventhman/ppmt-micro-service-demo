@@ -1,4 +1,4 @@
-package com.tj.exercise.ppmt.configure.center.demo.common;
+package com.tj.exercise.ppmt.configure.center.demo.common.listener;
 
 import com.tj.exercise.ppmt.configure.center.demo.common.util.PropertiesLoaderUtil;
 import org.springframework.boot.context.event.ApplicationContextInitializedEvent;
