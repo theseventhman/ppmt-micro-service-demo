@@ -17,7 +17,7 @@ public class AopTargetUtil {
                 proxyTarget = ((SingletonTargetSource) targetSource).getTarget();
             }
         }
-        Class<?> targetClass = AopUtils.getTargetClass(proxyTarget);
-        return targetClass.getName();
+
+        return proxyTarget;
     }
 }

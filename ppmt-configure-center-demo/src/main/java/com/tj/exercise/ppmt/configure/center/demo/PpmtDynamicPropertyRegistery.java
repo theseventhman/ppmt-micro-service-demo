@@ -1,7 +1,9 @@
 package com.tj.exercise.ppmt.configure.center.demo;
 
+import cn.hutool.core.util.ReflectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.tj.exercise.ppmt.configure.center.demo.common.*;
+import com.tj.exercise.ppmt.configure.center.demo.common.listener.DynamicBeanFieldListener;
 import com.tj.exercise.ppmt.configure.center.demo.common.listener.DynamicPropertyFieldListener;
 import com.tj.exercise.ppmt.configure.center.demo.common.support.PpmtFieldSupport;
 import com.tj.exercise.ppmt.configure.center.demo.common.support.PpmtConfigEnvironmentSupport;
@@ -11,6 +13,7 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.context.ApplicationContext;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.core.env.*;
@@ -31,13 +34,13 @@ public class PpmtDynamicPropertyRegistery implements InitializingBean, Applicati
     private List<String> fileNames = new ArrayList<>();
     private ConfigurableEnvironment environment;
     private List<DynamicPropertyFieldListener> listeners = new ArrayList<>();
+    private List<DynamicBeanFieldListener> fieldListeners = new ArrayList<>();
     private PpmtConfigEnvironmentSupport configEnvironmentSupport;
     private PpmtFieldSupport fieldSupport;
     private DynamicBeanScanner dynamicBeanScanner;
 
 
-
-    public PpmtDynamicPropertyRegistery(PpmtDynamicProperties ppmtDynamicProperties, ConfigurableEnvironment environment, PpmtConfigEnvironmentSupport environmentSupport,
+    public PpmtDynamicPropertyRegistery(PpmtDynamicProperties ppmtDynamicProperties, ConfigurableEnvironment environment,ApplicationContext applicationContext, PpmtConfigEnvironmentSupport environmentSupport,
                                         PpmtFieldSupport fieldSupport,DynamicBeanScanner dynamicBeanScanner) {
         this.ppmtDynamicProperties = ppmtDynamicProperties;
         this.environment = environment;
@@ -65,7 +68,9 @@ public class PpmtDynamicPropertyRegistery implements InitializingBean, Applicati
             log.info("----------Ppmt动态配置Key :{}----------",listener.getKey());
             //添加变更监听
             PpmtKvStore.Notify.getInstance().addPropertiesListener(listener.getFileName(),listener.getKey(),listener);
+
         }
+        ApplicationContext testcontext = ConfigurationPropertiesRefreshHandler.getApplicationContext();
         PpmtBootStrap.getInstance().init();
 
 
@@ -81,15 +86,20 @@ public class PpmtDynamicPropertyRegistery implements InitializingBean, Applicati
     private void registerDynamicFieldProperties(Object targetBean) {
         // 此处有可能获取的是经过代理的类, 属性是挂在本身的类里
         Object realTarget;
-        realTarget = AopTargetUtil.getTarget(targetBean);
-        Field[] fields =  realTarget.getClass().getDeclaredFields();
+
+       realTarget = AopTargetUtil.getTarget(targetBean);
+
+        Field[] fields =  ReflectUtil.getFields(realTarget.getClass());
 
         for(Field field : fields){
             if(field.isAnnotationPresent(Value.class)) {
                 Value valueAnnotation = field.getAnnotation(Value.class);
-
-                addDynamicPropertyListen(field, realTarget, field.getName(), field.getName());
+                String key = StrUtil.removeAll(valueAnnotation.value(),'$','{','}').trim();
+                addDynamicFieldListener(key, field, realTarget);
             }
+        }
+        for(DynamicBeanFieldListener fieldListener : this.fieldListeners) {
+            PpmtKvStore.Notify.getInstance().addFieldListenerMap(fieldListener.getKey(),fieldListener);
         }
 
     }
@@ -107,6 +117,14 @@ public class PpmtDynamicPropertyRegistery implements InitializingBean, Applicati
                 }
             }
         }
+    }
+
+    private void addDynamicFieldListener(String key, Field field, Object targetBean){
+        DynamicBeanFieldListener dynamicBeanFieldListener = new DynamicBeanFieldListener(key,fieldSupport);
+        dynamicBeanFieldListener.setKey(key);
+        dynamicBeanFieldListener.addTarget(targetBean,field);
+        fieldListeners.add(dynamicBeanFieldListener);
+
     }
 
     private void addDynamicPropertyListen(String key) {

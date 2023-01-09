@@ -1,10 +1,13 @@
 package com.tj.exercise.ppmt.configure.center.demo.common;
 
+import com.tj.exercise.ppmt.configure.center.demo.ConfigurationPropertiesRefreshHandler;
 import com.tj.exercise.ppmt.configure.center.demo.common.listener.DynamicBeanFieldListener;
 import com.tj.exercise.ppmt.configure.center.demo.common.listener.DynamicPropertyFieldListener;
 import com.tj.exercise.ppmt.configure.center.demo.common.listener.UpdateListener;
 import com.tj.exercise.ppmt.configure.center.demo.common.support.PpmtConfigEnvironmentSupport;
 import com.tj.exercise.ppmt.configure.center.demo.common.util.PropertiesUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +20,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class PpmtKvStore {
 
+
     public static final ConcurrentHashMap<String,Properties> fileMap = new ConcurrentHashMap<>();
 
 
@@ -25,12 +29,16 @@ public class PpmtKvStore {
             //如果有变更，把properties 的名称，变更的属性名称，属性的旧值，属性的新值传入到notifyPropertiesKeyListener方法中
                Properties properties =fileMap.get(oldConfig.getConfigFileName());
             Properties newProperties = PropertiesUtil.convertConfigToProperties(newConfig);
-
+            ApplicationContext applicationContext = ConfigurationPropertiesRefreshHandler.getApplicationContext();
             for (String  key : properties.stringPropertyNames()) {
                 Object oldValue = properties.getProperty(key);
                 Object newValue = newProperties.getProperty(key);
                 if (!oldValue.equals(newValue)) {
                     Notify.getInstance().notifyPropertiesKeyListener(oldConfig.getConfigFileName(), key, oldValue, newValue);
+                    Notify.getInstance().notifyDynamicFieldListener(key,oldValue,newValue);
+                   // ApplicationContext applicationContext = ConfigurationPropertiesRefreshHandler.getApplicationContext();
+                    ConfigurationPropertiesRefreshHandler.refreshConfigurationProperties(key,oldValue,newValue);
+
                 }
             }
 
@@ -89,6 +97,8 @@ public class PpmtKvStore {
             return listenKey;
         }
 
+
+
         public void notifyPropertiesKeyListener(String configFileName, String key, Object oldValue, Object newValue) {
             String listenerKey = generateListenKey(configFileName,key);
              if(listenerMap.containsKey(listenerKey)){
@@ -97,6 +107,16 @@ public class PpmtKvStore {
                        listener.handleEvent(key,newValue,oldValue);
                    }
                 }
+
+        }
+
+        public void notifyDynamicFieldListener( String key, Object oldValue, Object newValue) {
+            if(fieldListenerMap.containsKey(key)){
+                List<UpdateListener> listeners = fieldListenerMap.get(key);
+                for(UpdateListener listener : listeners){
+                    listener.handleEvent(key,newValue,oldValue);
+                }
+            }
 
         }
 

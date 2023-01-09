@@ -7,6 +7,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.core.Ordered;
 import org.springframework.stereotype.Component;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -31,7 +32,15 @@ public class DynamicBeanScanner implements ApplicationRunner, Ordered {
     @Override
     public void run(ApplicationArguments args) throws Exception {
         List<Object> beans = Arrays.stream(applicationContext.getBeanDefinitionNames()).filter(o-> applicationContext.getBean(o).getClass().getName().startsWith(PPMT))
-                .collect(Collectors.toList());
+              .map(s-> applicationContext.getBean(s)).collect(Collectors.toList());
+        for (Object bean : beans){
+            if(bean.getClass().getName().contains("Msg")) {
+                Field[] fields = bean.getClass().getFields();
+                for(Field field : fields){
+                    System.out.println("field的名称为"+field.getName());
+                }
+            }
+        }
         this.targetBeans = beans;
     }
 
