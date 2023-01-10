@@ -1,6 +1,5 @@
 package com.tj.exercise.workflow.demo;
 
-import com.tj.exercise.ppmt.configure.center.demo.ConfigurationPropertiesRefreshHandler;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;

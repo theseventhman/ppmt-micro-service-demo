@@ -15,7 +15,6 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.Ordered;
-import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.core.env.*;
 
 import java.lang.reflect.Field;
@@ -70,7 +69,7 @@ public class PpmtDynamicPropertyRegistery implements InitializingBean, Applicati
             PpmtKvStore.Notify.getInstance().addPropertiesListener(listener.getFileName(),listener.getKey(),listener);
 
         }
-        ApplicationContext testcontext = ConfigurationPropertiesRefreshHandler.getApplicationContext();
+
         PpmtBootStrap.getInstance().init();
 
 
@@ -80,6 +79,9 @@ public class PpmtDynamicPropertyRegistery implements InitializingBean, Applicati
         List<Object> targetBeans = dynamicBeanScanner.getTargetBeans();
         for(Object targetBean : targetBeans){
             registerDynamicFieldProperties(targetBean);
+        }
+        for(DynamicBeanFieldListener fieldListener : this.fieldListeners) {
+            PpmtKvStore.Notify.getInstance().addFieldListenerMap(fieldListener.getKey(),fieldListener);
         }
     }
 
@@ -98,9 +100,7 @@ public class PpmtDynamicPropertyRegistery implements InitializingBean, Applicati
                 addDynamicFieldListener(key, field, realTarget);
             }
         }
-        for(DynamicBeanFieldListener fieldListener : this.fieldListeners) {
-            PpmtKvStore.Notify.getInstance().addFieldListenerMap(fieldListener.getKey(),fieldListener);
-        }
+
 
     }
 

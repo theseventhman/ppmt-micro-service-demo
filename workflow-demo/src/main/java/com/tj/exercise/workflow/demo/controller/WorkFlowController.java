@@ -1,6 +1,5 @@
 package com.tj.exercise.workflow.demo.controller;
 
-import com.tj.exercise.ppmt.configure.center.demo.ConfigurationPropertiesRefreshHandler;
 import com.tj.exercise.workflow.demo.RefreshHandler;
 import com.tj.exercise.workflow.demo.config.MsgSettingConfig;
 import com.tj.exercise.workflow.demo.config.MyConfigProperties;
@@ -36,6 +35,16 @@ public class WorkFlowController {
     public String getMyMsgAccount(){
         ApplicationContext applicationContext = RefreshHandler.getApplicationContext();
         return myConfigProperties.getMsgAccount();
+    }
+
+    @GetMapping("getMyTestFlag")
+    public String getMyTestFlag(){
+        return msgSettingConfig.getMyTest();
+    }
+
+    @GetMapping("getMyTestByConfigProperties")
+    public  String getMyTestByConfigProperties(){
+        return myConfigProperties.getTest();
     }
 
 

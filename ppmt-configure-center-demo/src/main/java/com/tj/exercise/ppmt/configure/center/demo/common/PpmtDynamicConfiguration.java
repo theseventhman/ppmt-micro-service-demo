@@ -1,6 +1,5 @@
 package com.tj.exercise.ppmt.configure.center.demo.common;
 
-import com.tj.exercise.ppmt.configure.center.demo.ConfigurationPropertiesRefreshHandler;
 import com.tj.exercise.ppmt.configure.center.demo.ConfigurationPropertiesRefreshRegistry;
 import com.tj.exercise.ppmt.configure.center.demo.PpmtDynamicPropertyRegistery;
 import com.tj.exercise.ppmt.configure.center.demo.common.listener.DynamicPropertyFieldListener;
@@ -57,7 +56,7 @@ public class PpmtDynamicConfiguration {
     }
 
     @Bean
-    public ConfigurationPropertiesRefreshHandler configurationPropertiesRefreshHandler(){
+    public ConfigurationPropertiesRefreshHandler configurationPropertiesRefreshHandler(PpmtConfigEnvironmentSupport ppmtConfigEnvironmentSupport){
        return new ConfigurationPropertiesRefreshHandler();
     }
 }

@@ -14,11 +14,11 @@ import java.util.Properties;
  */
 public class PropertiesUtil {
     public static Properties convertConfigToProperties(Config newConfig) {
-        Properties p = new Properties();
+        Properties p =null;
         BufferedReader bf = null;
         try {
           //  p.load(new StringReader(newConfig.getValue()));
-
+            p = new Properties();
             bf = new BufferedReader(new InputStreamReader(IOUtils.toInputStream(newConfig.getValue()),"UTF-8"));
             p.load(bf);
         } catch (IOException e) {

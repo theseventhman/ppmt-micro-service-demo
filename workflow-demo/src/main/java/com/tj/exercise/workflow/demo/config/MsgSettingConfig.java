@@ -13,4 +13,6 @@ import org.springframework.context.annotation.Configuration;
 public class MsgSettingConfig {
     @Value("${my.msgaccount}")
     public  String msgAccount;
+    @Value("${my.test}")
+    public String myTest;
 }

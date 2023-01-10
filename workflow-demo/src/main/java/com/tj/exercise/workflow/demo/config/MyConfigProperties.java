@@ -14,4 +14,5 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties(prefix = "my")
 public class MyConfigProperties {
     public String msgAccount;
+    public String test;
 }
