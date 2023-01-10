@@ -113,7 +113,7 @@ public class PpmtDynamicPropertyRegistery implements InitializingBean, Applicati
             if(propertySource.isPresent() && propertySource.get() instanceof PropertiesPropertySource){
                 PropertiesPropertySource source = (PropertiesPropertySource) propertySource.get();
                 for(String key : source.getSource().keySet()){
-                    addDynamicPropertyListen(key);
+                    addDynamicPropertyListen(sourceFileName,key);
                 }
             }
         }
@@ -126,6 +126,24 @@ public class PpmtDynamicPropertyRegistery implements InitializingBean, Applicati
         fieldListeners.add(dynamicBeanFieldListener);
 
     }
+
+    private void addDynamicPropertyListen(String sourceFileName,String key) {
+        addDynamicPropertyListen(sourceFileName,null,null,null,key);
+    }
+
+    private void addDynamicPropertyListen(String sourceFileName, Field field, Object target, String expression, String key) {
+        for (String fileName : fileNames) {
+            if (sourceFileName.equals(PpmtConfigEnvironmentSupport.SOURCE_NAME_PREFIX + fileName)) {
+                DynamicPropertyFieldListener listener = getListener(fileName, key);
+                if (field != null && target != null) {
+                    listener.addTarget(field, target, expression);
+                }
+            }
+        }
+    }
+
+
+
 
     private void addDynamicPropertyListen(String key) {
         addDynamicPropertyListen(null,null,null,key);
