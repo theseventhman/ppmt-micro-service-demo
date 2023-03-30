@@ -10,6 +10,9 @@
         <module>observer-demo</module>
         <module>ppmt-configure-center-demo</module>
         <module>ppmt-core-project-api-demo</module>
+        <module>seata-order-demo</module>
+        <module>seata-stock-demo</module>
+        <module>seata-demo-api</module>
     </modules>
 
     <groupId>com.tj.exercise</groupId>
